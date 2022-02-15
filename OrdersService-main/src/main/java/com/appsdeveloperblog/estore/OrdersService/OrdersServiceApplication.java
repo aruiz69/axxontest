@@ -8,9 +8,13 @@ import org.axonframework.spring.messaging.unitofwork.SpringTransactionManager;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
+
+import com.thoughtworks.xstream.XStream;
 
 //@EnableDiscoveryClient
 @SpringBootApplication
+@Import({ AxonConfig.class })
 public class OrdersServiceApplication {
 
 	public static void main(String[] args) {
@@ -27,4 +31,18 @@ public class OrdersServiceApplication {
                 .build();
 	}
 
+}
+
+@org.springframework.context.annotation.Configuration
+class AxonConfig {
+ 
+    @Bean
+    public XStream xStream() {
+        XStream xStream = new XStream();
+      
+        xStream.allowTypesByWildcard(new String[] {
+                "com.appsdeveloperblog.**"
+        });
+        return xStream;
+    }
 }

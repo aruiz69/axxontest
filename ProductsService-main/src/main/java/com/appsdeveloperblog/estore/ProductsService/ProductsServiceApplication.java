@@ -10,12 +10,15 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 
 import com.appsdeveloperblog.estore.ProductsService.command.interceptors.CreateProductCommandInterceptor;
 import com.appsdeveloperblog.estore.ProductsService.core.errorhandling.ProductsServiceEventsErrorHandler;
+import com.thoughtworks.xstream.XStream;
 
 //@EnableDiscoveryClient
 @SpringBootApplication
+@Import({ AxonConfig.class })
 public class ProductsServiceApplication {
 
 	public static void main(String[] args) {
@@ -44,3 +47,18 @@ public class ProductsServiceApplication {
 	}
 
 }
+
+@org.springframework.context.annotation.Configuration
+class AxonConfig {
+ 
+    @Bean
+    public XStream xStream() {
+        XStream xStream = new XStream();
+      
+        xStream.allowTypesByWildcard(new String[] {
+                "com.appsdeveloperblog.**"
+        });
+        return xStream;
+    }
+}
+

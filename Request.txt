@@ -1,0 +1,28 @@
+## Crear un producto
+
+curl --location --request POST 'localhost:9095/products-srv/products' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "title":"Iphone 12",
+    "price": 500,
+    "quantity":4
+
+}'
+
+
+## Crear un una orden, se requier tener el productoId
+
+
+curl --location --request POST 'localhost:9096/orders-srv/orders' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "productId":"92239fde-ae20-4e1e-ba9f-406b2d121b9d",
+    "addressId": "qqq",
+    "quantity":1
+
+}'
+
+
+## Consultar Productos
+
+curl --location --request GET 'localhost:9095/products-srv/products'

@@ -5,12 +5,10 @@
  */
 package com.appsdeveloperblog.estore.OrdersService.command.rest;
 
-import com.appsdeveloperblog.estore.OrdersService.core.model.OrderStatus;
-import com.appsdeveloperblog.estore.OrdersService.core.model.OrderSummary;
-import com.appsdeveloperblog.estore.OrdersService.query.FindOrderQuery;
-import com.appsdeveloperblog.estore.OrdersService.command.commands.CreateOrderCommand;
 import java.util.UUID;
+
 import javax.validation.Valid;
+
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
@@ -21,8 +19,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.appsdeveloperblog.estore.OrdersService.command.commands.CreateOrderCommand;
+import com.appsdeveloperblog.estore.OrdersService.core.model.OrderStatus;
+import com.appsdeveloperblog.estore.OrdersService.core.model.OrderSummary;
+import com.appsdeveloperblog.estore.OrdersService.query.FindOrderQuery;
+
+import lombok.extern.log4j.Log4j2;
+
 @RestController
 @RequestMapping("/orders")
+@Log4j2
 public class OrdersCommandController {
 
 	private final CommandGateway commandGateway;
@@ -47,9 +53,10 @@ public class OrdersCommandController {
 		SubscriptionQueryResult<OrderSummary, OrderSummary> queryResult = queryGateway.subscriptionQuery(
 				new FindOrderQuery(orderId), ResponseTypes.instanceOf(OrderSummary.class),
 				ResponseTypes.instanceOf(OrderSummary.class));
-
+		log.info("Inicia proceso");
 		try {
 			commandGateway.sendAndWait(createOrderCommand);
+			log.info("Termina proceso");
 			return queryResult.updates().blockFirst();
 		} finally {
 			queryResult.close();
