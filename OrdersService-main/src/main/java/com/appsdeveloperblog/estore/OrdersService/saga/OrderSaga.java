@@ -23,7 +23,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.appsdeveloperblog.estore.OrdersService.command.commands.ApproveOrderCommand;
 import com.appsdeveloperblog.estore.OrdersService.command.commands.RejectOrderCommand;
-import com.appsdeveloperblog.estore.OrdersService.command.rest.OrdersCommandController;
 import com.appsdeveloperblog.estore.OrdersService.core.events.OrderApprovedEvent;
 import com.appsdeveloperblog.estore.OrdersService.core.events.OrderCreatedEvent;
 import com.appsdeveloperblog.estore.OrdersService.core.events.OrderRejectedEvent;
@@ -37,8 +36,6 @@ import com.appsdeveloperblog.estore.core.events.ProductReservationCancelledEvent
 import com.appsdeveloperblog.estore.core.events.ProductReservedEvent;
 import com.appsdeveloperblog.estore.core.model.User;
 import com.appsdeveloperblog.estore.core.query.FetchUserPaymentDetailsQuery;
-
-import lombok.extern.log4j.Log4j2;
 
 @Saga
 public class OrderSaga {
